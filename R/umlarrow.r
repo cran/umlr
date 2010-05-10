@@ -1,19 +1,50 @@
-umlarrow = function (v1, v2)
-{	extend (compenv (v1, v2), "umlarrow")	
+umlarrow = function (v1, v2, solid=FALSE, col="black", fill="white")
+{	con = extend (umlconnection (v1, v2), "umlarrow")
+	con$solid = solid
+	con$col = col
+	con$fill = fill
+	con
 }
 
+umlextends = function (v1, v2, ...) extend (umlarrow (v1, v2, ...), "umlextends")
+
+#rewrite...
 plot.umlarrow = function (con, ...)
-{	cc = list (x=con$v1$x, y=con$v1$y)
-	cp = list (x=con$v2$x, y=con$v2$y)
-	.connector (cc, cp)
+{	source = target = 0
+	d1 = umldims (con$v1)
+	d2 = umldims (con$v2)
+	dir = atan (-1 * (con$v2$y - con$v1$y) / (con$v2$x - con$v1$x) )
+	if (con$v1$x > con$v2$x)
+	{	if (con$v1$y < con$v2$y) dir = dir - pi
+		else dir = dir + pi
+	}
+	#east
+	if (dir > -0.25 * pi && dir <= 0.25 * pi)
+	{	source = c (d1 [3], con$v1$y)
+		target = c (d2 [1], con$v2$y)
+	}
+	#north
+	else if (dir > 0.25 * pi && dir <= 0.75 * pi)
+	{	source = c (con$v1$x, d1 [2])
+		target = c (con$v2$x, d2 [4])
+	}
+	#west
+	else if (dir > 0.75 * pi || dir <= -0.75 * pi)
+	{	source = c (d1 [1], con$v1$y)
+		target = c (d2 [3], con$v2$y)
+	}
+	#south
+	else
+	{	source = c (con$v1$x, d1 [4])
+		target = c (con$v2$x, d2 [2])
+	}
+	fill = if (con$solid) con$col else con$fill
+	lines (c (source [1], target [1]), c (source [2], target [2]), col=con$col)
+	.arrowhead (source [1], source [2], target [1], target [2], con$col, fill)
 }
 
-.connector = function (cc, cp)
-{	lines (c (cc$x, cp$x), c (cc$y, cp$y) )
-	.arrowhead (cc$x, cc$y, cp$x, cp$y)
-}
-
-.arrowhead = function (x1, y1, x2, y2, s=0.4)
+#rewrite...
+.arrowhead = function (x1, y1, x2, y2, col, fill, s=0.45)
 {	dx = x2 - x1
 	dy = y2 - y1
 	slope = dy / dx
@@ -26,7 +57,7 @@ plot.umlarrow = function (con, ...)
 		ya = y2 + s * sin (a + pi - pi / 8)
 		xb = x2 + s * cos (a + pi + pi / 8)
 		yb = y2 + s * sin (a + pi + pi / 8)
-	}
+}
 	else
 	{	xc = x2 - s * cos (a + pi)
 		yc = y2 - s * sin (a + pi)
@@ -35,8 +66,7 @@ plot.umlarrow = function (con, ...)
 		xb = x2 - s * cos (a + pi + pi / 8)
 		yb = y2 - s * sin (a + pi + pi / 8)
 	}
-	polygon (c (xa, xb, x2), c (ya, yb, y2), col="grey95")
+	polygon (c (xa, xb, x2), c (ya, yb, y2), border=col, col=fill)
 }
-
 
 

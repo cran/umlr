@@ -1,0 +1,70 @@
+%\VignetteIndexEntry{Inheritance_Diagram_Example}
+\documentclass {article}
+\usepackage {maia}
+\lfoot{umlr 0.2.0}
+\SweaveOpts{keep.source=TRUE}
+\SweaveOpts{prefix.string=tmp}
+
+\begin{document}
+
+<<echo=false>>=
+options(continue=" ")
+options(SweaveHooks=list(fig=function()
+par(mar=c(5.1, 4.1, 1.1, 2.1))))
+@
+
+\setkeys{Gin}{width=0.6\textwidth}
+
+\mtitlea {Open Source Development with UML and R (umlr 0.2.0)}{Inherintance Diagram Example (Temp)}
+
+\begin {abstract}
+This vignette, is temporary.
+\end {abstract}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%Section
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\msec {Example}
+
+In the umlr package, a uml model is treated similar to a directed graph. We create some nodes (representing classes etc), then some connections (I guess edges, however I just like the word connection) between pairs of nodes. Potentially, we group a set of connections, to produce composite arrows. Then create a graph, and then a top level model which contains the graph along with some other information.
+
+<<>>=
+library (umlr)
+@
+
+<<>>=
+v0 = umlclass ("mysuperclass", y=-4)
+v1 = umlclass ("mysubclass1", c ("x", "y"), x=-4)
+v2 = umlclass ("mysubclass2", c ("u", "v"), "f", x=4)
+@
+
+<<>>=
+con1 = umlextends (v1, v0)
+con2 = umlextends (v2, v0)
+umlmerge (con1, con2)
+@
+
+<<>>=
+g = umlgraph (list (v0, v1, v2), list (con1, con2) )
+m = uml (g)
+@
+
+Won't work within Sweave. The function umlgui creates a GUI. The function umlpdf creates it's own graphics device.
+<<eval=false>>=
+umlgui (m)
+umlpdf (m)
+@
+
+There's a bug, resulting from Sweave changing the graphics settings, that makes it a different size than it should be, hopefully fix next version...
+
+Also note, there may be further distortion, if your pdf viewer, isn't displaying the document in it's actual size (not a problem, just something to be aware of).
+
+\setkeys{Gin}{width=0.5\textwidth}
+
+\begin {center}
+	\includegraphics {model.pdf}
+\end {center}
+
+\end{document}
+
+
