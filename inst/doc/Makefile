@@ -5,7 +5,7 @@ makeall:
 makedev:
 	make umlr.pdf
 
-umlr.pdf: umlr.tex maia.sty
+umlr.pdf: umlr.tex maia2.sty
 	pdflatex umlr.tex
 
 umlr.tex: umlr.rnw
@@ -15,4 +15,5 @@ clean:
 	rm *.tex
 	rm *.aux
 	rm *.log
+
 

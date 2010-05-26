@@ -1,7 +1,7 @@
 umlgui = function (m, grid=TRUE)
 {	plot (m, grid=grid)
-	p = locator (1)
-	while (p$x > m$k$xlim [1] && p$x < m$k$xlim [2] &&
+	p = try (locator (1), TRUE)
+	while (is.list (p) && p$x > m$k$xlim [1] && p$x < m$k$xlim [2] &&
 		p$y > m$k$ylim [1] && p$y < m$k$ylim [2])
 	{	x = round (4 * p$x) / 4
 		y = round (4 * p$y) / 4
@@ -16,10 +16,9 @@ umlgui = function (m, grid=TRUE)
 		}
 		if (!is.null (u) ) recenter (u, x, y)
 		plot (m, FALSE, grid=grid)
-		p = locator (1)	
+		p = try (locator (1), TRUE)
 	}
-	m
+	invisible (m)
 }
-
 
 

@@ -5,7 +5,7 @@
 \title{uml arrows}
 \description{todo}
 \usage{
-umlarrow (v1, v2, solid=FALSE, col="black", fill="white")
+umlarrow (v1, v2, solid=FALSE, col="black", fill=getOption("umlr.fill") )
 umlextends (v1, v2, \dots)
 \method{plot}{umlarrow}(con, \dots)
 }
@@ -18,5 +18,6 @@ umlextends (v1, v2, \dots)
 \item{fill}{.}
 \item{\dots}{.}
 }
+
 
 

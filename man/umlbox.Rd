@@ -5,7 +5,8 @@
 \title{uml boxes}
 \description{todo}
 \usage{
-umlbox (x=0, y=0, w=getOption ("umlr.wmin"), h=1.2, text="", col="black", fill="white")
+umlbox (x=0, y=0, w=getOption ("umlr.wmin"), h=1.2, text="",
+	col="black", fill=getOption("umlr.fill") )
 \method{umldims}{umlbox}(v, \dots)
 \method{plot}{umlbox}(v, \dots)
 }
@@ -20,4 +21,5 @@ umlbox (x=0, y=0, w=getOption ("umlr.wmin"), h=1.2, text="", col="black", fill="
 \item{v}{.}
 \item{\dots}{.}
 }
+
 

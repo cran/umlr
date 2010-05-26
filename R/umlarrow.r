@@ -1,4 +1,4 @@
-umlarrow = function (v1, v2, solid=FALSE, col="black", fill="white")
+umlarrow = function (v1, v2, solid=FALSE, col="black", fill=getOption ("umlr.fill") )
 {	con = extend (umlconnection (v1, v2), "umlarrow")
 	con$solid = solid
 	con$col = col
@@ -44,7 +44,7 @@ plot.umlarrow = function (con, ...)
 }
 
 #rewrite...
-.arrowhead = function (x1, y1, x2, y2, col, fill, s=0.45)
+.arrowhead = function (x1, y1, x2, y2, col=NULL, fill=NA, s=0.45)
 {	dx = x2 - x1
 	dy = y2 - y1
 	slope = dy / dx
@@ -68,5 +68,7 @@ plot.umlarrow = function (con, ...)
 	}
 	polygon (c (xa, xb, x2), c (ya, yb, y2), border=col, col=fill)
 }
+
+
 
 

@@ -1,5 +1,5 @@
 umlbox = function (x=0, y=0, w=getOption ("umlr.wmin"), h=1.2,
-	text="", col="black", fill="white")
+	text="", col="black", fill=getOption ("umlr.fill") )
 {	v = extend (umlnode (x, y), "umlbox")
 	v$w = w
 	v$h = h
@@ -43,6 +43,8 @@ plot.umlbox = function (v, ...)
 
 	polygon (xv, yv, lwd=1.2, col=fill, border=col)
 }
+
+
 
 
 

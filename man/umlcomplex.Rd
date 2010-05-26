@@ -1,14 +1,16 @@
 \name{umlcomplex}
-\alias{umlclass}
 \alias{umlcomplex}
+\alias{print.umlcomplex}
 \alias{plot.umlcomplex}
+\alias{umlclass}
 \title{uml boxes with partitions}
 \description{todo}
 \usage{
-umlclass (name, attributes=NULL, methods=NULL, abstract=FALSE, \dots)
 umlcomplex (x=0, y=0, text=list (""), markup=FALSE, italics=FALSE,
 	expand=FALSE, roundness=0.18, \dots)
+\method{print}{umlcomplex}(v, \dots)
 \method{plot}{umlcomplex}(v, \dots)
+umlclass (name, attributes=NULL, methods=NULL, abstract=FALSE, \dots)
 }
 \arguments{
 \item{name}{.}
@@ -25,5 +27,7 @@ umlcomplex (x=0, y=0, text=list (""), markup=FALSE, italics=FALSE,
 \item{v}{.}
 \item{\dots}{.}
 }
+
+
 
 

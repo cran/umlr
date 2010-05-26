@@ -1,7 +1,6 @@
 %\VignetteIndexEntry{Inheritance_Diagram_Example}
 \documentclass {article}
-\usepackage {maia}
-\lfoot{umlr 0.2.0}
+\usepackage {maia2}
 \SweaveOpts{keep.source=TRUE}
 \SweaveOpts{prefix.string=tmp}
 
@@ -11,59 +10,58 @@
 options(continue=" ")
 options(SweaveHooks=list(fig=function()
 par(mar=c(5.1, 4.1, 1.1, 2.1))))
+library (umlr)
 @
 
-\setkeys{Gin}{width=0.6\textwidth}
+\mtitle {umlr}{0.3.0}{Inherintance Diagram Example}
 
-\mtitlea {Open Source Development with UML and R (umlr 0.2.0)}{Inherintance Diagram Example (Temp)}
-
-\begin {abstract}
-This vignette, is temporary.
-\end {abstract}
+\mabstract{This vignette is temporary, and provides an example of using the umlr package to create a simple inheritance diagram.}
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 %Section
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-\msec {Example}
+\msec {Simple Example}
 
-In the umlr package, a uml model is treated similar to a directed graph. We create some nodes (representing classes etc), then some connections (I guess edges, however I just like the word connection) between pairs of nodes. Potentially, we group a set of connections, to produce composite arrows. Then create a graph, and then a top level model which contains the graph along with some other information.
+In the umlr package, a uml model is treated in a similar way to a directed graph. We create some nodes (representing classes, etc), then some connections (aka edges) between pairs of nodes. Potentially, we can group a set of connections, to produce what I like to refer to as composite arrows (currently, north-facing only). Then create a model, from the nodes and connections.
 
-<<>>=
-library (umlr)
+<<eval=false>>=
+umlro.fill (rgb (0.965, 0.95, 1) )
 @
 
-<<>>=
-v0 = umlclass ("mysuperclass", y=-4)
+<<eval=false>>=
+v0 = umlclass ("mysuperclass", abstract=TRUE, y=-4)
 v1 = umlclass ("mysubclass1", c ("x", "y"), x=-4)
 v2 = umlclass ("mysubclass2", c ("u", "v"), "f", x=4)
-@
-
-<<>>=
 con1 = umlextends (v1, v0)
 con2 = umlextends (v2, v0)
 umlmerge (con1, con2)
 @
 
-<<>>=
-g = umlgraph (list (v0, v1, v2), list (con1, con2) )
-m = uml (g)
+<<eval=false>>=
+m = uml (v0, v1, v2, con1, con2)
 @
 
-Won't work within Sweave. The function umlgui creates a GUI. The function umlpdf creates it's own graphics device.
+\noindent We can create a simple GUI (more precisely an interactive plot) to adjust the layout. Closing the plotting window, or clicking on the edge of plot, sets the nodes in place. 
 <<eval=false>>=
 umlgui (m)
 umlpdf (m)
 @
 
-There's a bug, resulting from Sweave changing the graphics settings, that makes it a different size than it should be, hopefully fix next version...
-
-Also note, there may be further distortion, if your pdf viewer, isn't displaying the document in it's actual size (not a problem, just something to be aware of).
-
-\setkeys{Gin}{width=0.5\textwidth}
-
 \begin {center}
 	\includegraphics {model.pdf}
 \end {center}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%Section
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\msec {Sweave Notes}
+
+Note that to successfully use this package with Latex, actual image sizes need to be used. In the case of Sweave, one needs to include something along the lines of:
+\begin {verbatim}
+\usepackage[nogin]{Sweave}
+\end {verbatim}
+
+\noindent Also note that the commands \verb|umlgui| and \verb|umlpdf| don't work within sweave. The gui is interactive and the pdf command creates it's own graphics device.
 
 \end{document}
 

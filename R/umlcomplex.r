@@ -34,6 +34,9 @@ umlcomplex = function (x=0, y=0, text=list (""), markup=FALSE, italics=FALSE,
 	v
 }
 
+print.umlcomplex = function (v, ...)
+	cat (class (v) [1], ": ", v$strs [1], "\n", sep="")
+
 plot.umlcomplex = function (v, ...)
 {	if (is.na (v$w) ) .umlcomplex.validate (v)
 	.rbox (v$x, v$y, v$w, v$h, s=v$roundness, col=v$col, fill=v$fill)
@@ -43,11 +46,11 @@ plot.umlcomplex = function (v, ...)
 		str = eval (parse (text=str) )
 	}
 	text (v$x, v$y + v$ystrs [1], str, font=ifelse (v$italics, 3, 1),
-		cex=0.9, adj= c (0.5, 0.5) )
+		cex=0.8, adj= c (0.5, 0.35) )
 	if (v$nspaces > 1)
 	{	segments (v$x - v$w / 2, v$y + v$ydivs, v$x + v$w / 2, v$y + v$ydivs)
 		text (v$x - v$w / 2 + 0.15, v$y + v$ystrs [-1], v$strs [-1],
-			cex=0.9, adj= c (0, 0.5) )
+			cex=0.8, adj= c (0, 0.35) )
 	}
 }
 
@@ -57,6 +60,8 @@ plot.umlcomplex = function (v, ...)
 	wstr = max (strwidth (v$strs) )
 	if (v$w < wstr) v$w = wstr
 }
+
+
 
 
 

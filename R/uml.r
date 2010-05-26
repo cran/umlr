@@ -1,5 +1,7 @@
-uml = function (g, k=umlcanvas (), model.path="model.umlr", image.path="model")
+uml = function (..., g=umlgraph (...), k=umlcanvas (),
+	model.path="model.umlr", image.path="model")
 	extend (ENVIRONMENT (g, k, model.path, image.path), "uml")
+
 
 umlcanvas = function (model.size=c (22, 15), margin.size=0.2, xlim, ylim)
 {	if (missing (xlim) ) {x = model.size [1] / 2; xlim = c (-x, x)}
@@ -18,5 +20,11 @@ umlload = function (path="model.umlr") load (path)
 umldims = function (...) UseMethod ("umldims")
 umldims.uml = function (m, ...) umldims (m$g)
 
+print.uml = function (m, ...) print (m$g)
+
 recenter = function (...) UseMethod ("recenter")
+
+
+
+
 
